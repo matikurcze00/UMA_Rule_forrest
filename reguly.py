@@ -1,7 +1,8 @@
 import itertools
 import copy
 import collections
-
+import random
+import math
 
 def koniunkcja_selektorow(selektor_1, selektor_2):
     selektor = [i for i in selektor_1 if i in selektor_2]
@@ -158,3 +159,35 @@ class Zbior_Regul:
     def __init__(self, zbior_T, kompleks_ogolny):
         self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny)
         self.kompleks_ogolny = kompleks_ogolny
+
+
+
+def RegDrzewo(zbior_T, kompleks_ogolny):
+  dlugosc_kompleksu = len(kompleks_ogolny)
+  dlugosc_zbioru = len(zbior_T)
+
+  nowy_kompleks = []
+  
+  kompleks_do_dodania =  random.sample(range(len(dlugosc_kompleksu-2),math.ceil(math.sqrt(dlugosc_kompleksu))))
+  for dodanie in kompleks_do_dodania:
+    nowy_kompleks.append(kompleks_ogolny[dodanie])
+  nowy_kompleks.append(dlugosc_kompleksu-1)
+  
+  
+  nowy_trenujacy=[]
+  for dane in range(dlugosc_zbioru):
+    temp_wiersz = []
+    wiersz = random.randrange(dlugosc_zbioru)
+    for kompleks in kompleks_do_dodania:
+      temp_wiersz.append(zbior_T[wiersz][kompleks])
+    nowy_trenujacy.append(temp_wiersz)
+
+
+  Drzewo = Zbior_Regul(nowy_trenujacy, nowy_kompleks)
+  return Drzewo
+
+def RegLas(dane_T, kompleks_ogolny, szerokosc):
+  Forest = []
+  for t in range(szerokosc):
+    Forest[t]=RegDrzewo(dane_T,kompleks_ogolny)
+  return Forest
