@@ -143,22 +143,54 @@ def usun_przyklady_pokrywane_przez_kompleks(z_przykl, kompleks):
     return zbior
 
 
-def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny):
+def skroc_kompleks_ogolny(kompleks_ogolny, header):
+    nowy_kompleks_ogolny = []
+    for kolumna in header:
+        nowy_kompleks_ogolny.append(kompleks_ogolny[kolumna])
+    return nowy_kompleks_ogolny
+
+
+def rozszerz_kompleks(kompleks, kompleks_ogolny, header):
+    nowy_kompleks = []
+    kopia_header = copy.copy(header)
+    i = 0
+    flaga = 1
+    for kolumna in range(len(kompleks_ogolny)):
+        if flaga:
+            if kolumna == kopia_header[0]:
+                nowy_kompleks.append(kompleks[i])
+                i += 1
+                kopia_header.remove(kolumna)
+                if len(kopia_header) < 1:
+                    flaga = 0
+            else:
+                nowy_kompleks.append(kompleks_ogolny[kolumna])
+        else:
+            nowy_kompleks.append(kompleks_ogolny[kolumna])
+    return nowy_kompleks
+
+
+def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, header):
     zbior_Regul = []
     zbior_P = copy.copy(zbior_T)
-    zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny)
+    zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
-        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny,  m=1)
+        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=1)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
-        zbior_Regul.append((kompleks, klasa))
+        zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, header), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
     return zbior_Regul
 
 
 class Zbior_Regul:
-    def __init__(self, zbior_T, kompleks_ogolny):
-        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny)
+    def __init__(self, zbior_T, kompleks_ogolny, header):
+        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, header), kompleks_ogolny, header)
         self.kompleks_ogolny = kompleks_ogolny
+
+    def klasyfikacja(self, przyklad):
+        for regula in self.zbior_Regul:
+            if czy_kompleks_pokrywa_przyklad(regula[0], przyklad):
+                return regula[1]
 
 
 
