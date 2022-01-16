@@ -167,8 +167,8 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   dlugosc_zbioru = len(zbior_T)
 
   nowy_kompleks = []
-  
   nowy_kompleks =  random.sample(range(len(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))-1))
+  nowy_kompleks.sort()
   nowy_kompleks.append(dlugosc_kompleksu-1)
   
   
