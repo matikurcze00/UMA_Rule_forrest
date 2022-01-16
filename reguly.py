@@ -168,10 +168,10 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
 
   nowy_kompleks = []
   
-  kompleks_do_dodania =  random.sample(range(len(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))))
+  kompleks_do_dodania =  random.sample(range(len(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))-1))
   for dodanie in kompleks_do_dodania:
     nowy_kompleks.append(kompleks_ogolny[dodanie])
-  nowy_kompleks.append(dlugosc_kompleksu-1)
+  nowy_kompleks.append(kompleks_ogolny[dlugosc_kompleksu-1])
   
   
   nowy_trenujacy=[]
