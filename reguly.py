@@ -210,6 +210,7 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
     wiersz = random.randrange(dlugosc_zbioru)
     for kompleks in nowy_kompleks:
       temp_wiersz.append(zbior_T[wiersz][kompleks])
+    temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
     nowy_trenujacy.append(temp_wiersz)
 
 
