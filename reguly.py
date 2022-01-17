@@ -199,7 +199,7 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   dlugosc_zbioru = len(zbior_T)
 
   nowy_kompleks = []
-  nowy_kompleks =  random.sample(range(len(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))-1))
+  nowy_kompleks =  random.sample(range(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))-1)
   nowy_kompleks.sort()
   nowy_kompleks.append(dlugosc_kompleksu-1)
   
@@ -208,12 +208,12 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   for dane in range(dlugosc_zbioru):
     temp_wiersz = []
     wiersz = random.randrange(dlugosc_zbioru)
-    for kompleks in kompleks_do_dodania:
+    for kompleks in nowy_kompleks:
       temp_wiersz.append(zbior_T[wiersz][kompleks])
     nowy_trenujacy.append(temp_wiersz)
 
 
-  Drzewo = Zbior_Regul(nowy_trenujacy, nowy_kompleks)
+  Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks)
   return Drzewo
 
 def RegLas(dane_T, kompleks_ogolny, szerokosc):

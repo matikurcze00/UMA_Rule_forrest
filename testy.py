@@ -1,4 +1,4 @@
-from reguly import Zbior_Regul
+from reguly import RegDrzewo, Zbior_Regul
 from reguly import skroc_kompleks_ogolny
 from reguly import rozszerz_kompleks
 
@@ -139,25 +139,28 @@ zbior_T = [przyklad_1, przyklad_2, przyklad_3, przyklad_4, przyklad_5, przyklad_
 zbior_P = [przyklad_1, przyklad_2, przyklad_3, przyklad_4, przyklad_5, przyklad_6, przyklad_7, przyklad_8, przyklad_9, przyklad_10, przyklad_11, przyklad_12, przyklad_13, przyklad_14]
 
 
-print(zbior_P)
-print("--------------------------")
+#print(zbior_P)
+#print("--------------------------")
 Reguly = Zbior_Regul(zbior_P, kompleks_pogoda_ogolny, [1, 2, 3])
-print(Reguly.zbior_Regul)
+#print(Reguly.zbior_Regul)
 # print(len(Reguly.zbior_Regul))
 # print(Reguly.klasyfikacja(przyklad_4))
 
 # print("--------------------------")
 # print("PRZYKLAD")
 # print(przyklad_3)
-print("--------------------------")
-print("KOMPLEKS OGOLNY")
-print(kompleks_pogoda_ogolny)
-print("--------------------------")
-print(skroc_kompleks_ogolny(kompleks_pogoda_ogolny, []))
+#print("--------------------------")
+#print("KOMPLEKS OGOLNY")
+#print(kompleks_pogoda_ogolny)
+#pr int("--------------------------")
+#print(skroc_kompleks_ogolny(kompleks_pogoda_ogolny, []))
 
 kompleks_krotszy = [[sloneczna, deszczowa], [ciepla], [normalna]]
 
 
-print("--------------------------")
-print(len(kompleks_pogoda_ogolny))
-print(rozszerz_kompleks(kompleks_krotszy, kompleks_pogoda_ogolny, [1]))
+#print("--------------------------")
+#print(len(kompleks_pogoda_ogolny))
+#print(rozszerz_kompleks(kompleks_krotszy, kompleks_pogoda_ogolny, [1]))
+print('Zaczynam robic')
+nowe_drzewo = RegDrzewo(zbior_P, kompleks_pogoda_ogolny)
+print('Koniec')
