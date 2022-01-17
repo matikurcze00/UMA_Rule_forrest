@@ -1,4 +1,4 @@
-from reguly import RegDrzewo, Zbior_Regul
+from reguly import RegDrzewo, Zbior_Regul, RegLas
 from reguly import skroc_kompleks_ogolny
 from reguly import rozszerz_kompleks
 
@@ -162,6 +162,11 @@ kompleks_krotszy = [[sloneczna, deszczowa], [ciepla], [normalna]]
 #print(len(kompleks_pogoda_ogolny))
 #print(rozszerz_kompleks(kompleks_krotszy, kompleks_pogoda_ogolny, [1]))
 print('Zaczynam robic')
-nowe_drzewo = RegDrzewo(zbior_P, kompleks_pogoda_ogolny)
-print(nowe_drzewo.zbior_Regul)
+#nowe_drzewo = RegDrzewo(zbior_P, kompleks_pogoda_ogolny)
+#rint(nowe_drzewo.zbior_Regul)
+
+nowy_las = RegLas(zbior_P,kompleks_pogoda_ogolny,10)
 print('Koniec')
+print(nowy_las.klasyfikacja(przyklad_4))
+print('Wynik przykladu \n')
+print(przyklad_4)

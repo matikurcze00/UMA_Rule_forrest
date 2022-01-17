@@ -1,6 +1,7 @@
 import itertools
 import copy
 import collections
+from msilib.schema import Class
 import random
 import math
 
@@ -217,8 +218,20 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks)
   return Drzewo
 
-def RegLas(dane_T, kompleks_ogolny, szerokosc):
-  Forest = []
-  for t in range(szerokosc):
-    Forest[t]=RegDrzewo(dane_T,kompleks_ogolny)
-  return Forest
+class RegLas:
+  def __init__(self, dane_T, kompleks_ogolny, szerokosc):
+    self.szerokosc = szerokosc
+    self.dane_T = dane_T
+    self.kompleks_ogolny = kompleks_ogolny
+    self.las = []
+    for t in range(self.szerokosc):
+      self.las.append(RegDrzewo(dane_T, kompleks_ogolny))
+  
+  def klasyfikacja(self, przyklad):
+    wynik = 0
+    for drzewo in self.las:
+      wynik+=drzewo.klasyfikacja(przyklad)
+    wynik=wynik/self.szerokosc
+    if (wynik>0.5):
+      return 1
+    else: return 0
