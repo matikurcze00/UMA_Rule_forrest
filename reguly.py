@@ -125,11 +125,11 @@ def znajdz_kompleks_cn2(z_T, z_P, zbior_atomowych, kompleks_ogolny, m=5):
     while S != []:
         S_zapas = koniunkcja_zbiorow_kompleksow(S, zbior_atomowych)
         S_zapas = [i for i in S_zapas if i not in S]
-        S_zapas = [i for i in S_zapas if i not in [[[], [], [], []]]]
+        S_zapas = [i for i in S_zapas if i not in [[[], [], [], [], [], [], [], [], [], [], [], []]]]
         for kompleks in S_zapas:
             if jakosc_kompleksu_na_zbiorze(kompleks, z_P) > jakosc_kompleksu_na_zbiorze(k_wybrany, z_P):
-                # if czy_kompleks_statystycznie_istotny(kompleks, z_P):
-                    k_wybrany = copy.copy(kompleks)
+              #if czy_kompleks_statystycznie_istotny(kompleks, z_P):
+              k_wybrany = copy.copy(kompleks)
         S_zapas.sort(reverse=True, key=jakosc)
         if len(S_zapas) > 0:
             S = [S_zapas[i] for i in range(min(m, len(S_zapas)))]
@@ -176,7 +176,7 @@ def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, h
     zbior_P = copy.copy(zbior_T)
     zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
-        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=1)
+        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=5)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
         zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, header), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
@@ -200,9 +200,9 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   dlugosc_zbioru = len(zbior_T)
 
   nowy_kompleks = []
-  nowy_kompleks =  random.sample(range(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu))-1)
+  nowy_kompleks =  random.sample(range(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu)))
   nowy_kompleks.sort()
-  nowy_kompleks.append(dlugosc_kompleksu-1)
+
   
   
   nowy_trenujacy=[]
@@ -219,7 +219,7 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
   return Drzewo
 
 class RegLas:
-  def __init__(self, dane_T, kompleks_ogolny, szerokosc):
+  def __init__(self, dane_T, kompleks_ogolny, szerokosc=50):
     self.szerokosc = szerokosc
     self.dane_T = dane_T
     self.kompleks_ogolny = kompleks_ogolny
@@ -230,8 +230,16 @@ class RegLas:
   def klasyfikacja(self, przyklad):
     wynik = 0
     for drzewo in self.las:
-      wynik+=drzewo.klasyfikacja(przyklad)
+      wynik+= drzewo.klasyfikacja(przyklad)
     wynik=wynik/self.szerokosc
     if (wynik>0.5):
       return 1
     else: return 0
+
+def dokladnosc(funkcja, zbior, kompleks_ogolny):
+  nr_odpowiedzi = len(kompleks_ogolny)
+  dobrze = 0
+  for przyklad in zbior:
+    if(przyklad[nr_odpowiedzi]==funkcja.klasyfikacja(przyklad)):
+      dobrze +=1
+  print((dobrze*100/len(zbior)))
