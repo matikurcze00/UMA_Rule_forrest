@@ -230,7 +230,7 @@ class RegLas:
   def klasyfikacja(self, przyklad):
     wynik = 0
     for drzewo in self.las:
-      wynik+= drzewo.klasyfikacja(przyklad)
+      wynik += drzewo.klasyfikacja(przyklad)
     wynik=wynik/self.szerokosc
     if (wynik>0.5):
       return 1
