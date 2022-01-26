@@ -5,6 +5,7 @@ from msilib.schema import Class
 import random
 import math
 
+
 def koniunkcja_selektorow(selektor_1, selektor_2):
     selektor = [i for i in selektor_1 if i in selektor_2]
     return selektor
