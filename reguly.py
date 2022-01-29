@@ -129,8 +129,8 @@ def znajdz_kompleks_cn2(z_T, z_P, zbior_atomowych, kompleks_ogolny, m=5):
         S_zapas = [i for i in S_zapas if i not in [[[], [], [], [], [], [], [], [], [], [], [], []]]]
         for kompleks in S_zapas:
             if jakosc_kompleksu_na_zbiorze(kompleks, z_P) > jakosc_kompleksu_na_zbiorze(k_wybrany, z_P):
-              #if czy_kompleks_statystycznie_istotny(kompleks, z_P):
-              k_wybrany = copy.copy(kompleks)
+                # if czy_kompleks_statystycznie_istotny(kompleks, z_P):
+                    k_wybrany = copy.copy(kompleks)
         S_zapas.sort(reverse=True, key=jakosc)
         if len(S_zapas) > 0:
             S = [S_zapas[i] for i in range(min(m, len(S_zapas)))]
@@ -172,12 +172,12 @@ def rozszerz_kompleks(kompleks, kompleks_ogolny, header):
     return nowy_kompleks
 
 
-def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, header):
+def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, header, mm=5):
     zbior_Regul = []
     zbior_P = copy.copy(zbior_T)
     zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
-        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=5)
+        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=mm)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
         zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, header), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
@@ -185,8 +185,8 @@ def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, h
 
 
 class Zbior_Regul:
-    def __init__(self, zbior_T, kompleks_ogolny, header):
-        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, header), kompleks_ogolny, header)
+    def __init__(self, zbior_T, kompleks_ogolny, header, mmm=5):
+        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, header), kompleks_ogolny, header, mm=mmm)
         self.kompleks_ogolny = kompleks_ogolny
 
     def klasyfikacja(self, przyklad):
@@ -195,8 +195,7 @@ class Zbior_Regul:
                 return regula[1]
 
 
-
-def RegDrzewo(zbior_T, kompleks_ogolny):
+def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
   dlugosc_kompleksu = len(kompleks_ogolny)
   dlugosc_zbioru = len(zbior_T)
 
@@ -216,17 +215,18 @@ def RegDrzewo(zbior_T, kompleks_ogolny):
     nowy_trenujacy.append(temp_wiersz)
 
 
-  Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks)
+  Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
   return Drzewo
 
+
 class RegLas:
-  def __init__(self, dane_T, kompleks_ogolny, szerokosc=50):
+  def __init__(self, dane_T, kompleks_ogolny, szerokosc=50, RegLasM=5):
     self.szerokosc = szerokosc
     self.dane_T = dane_T
     self.kompleks_ogolny = kompleks_ogolny
     self.las = []
     for t in range(self.szerokosc):
-      self.las.append(RegDrzewo(dane_T, kompleks_ogolny))
+      self.las.append(RegDrzewo(dane_T, kompleks_ogolny, RegDrzeM=RegLasM))
   
   def klasyfikacja(self, przyklad):
     wynik = 0
@@ -237,10 +237,32 @@ class RegLas:
       return 1
     else: return 0
 
+
+def dane_statystyczne(funkcja, zbior, kompleks_ogolny):
+    nr_odpowiedzi = len(kompleks_ogolny)
+    TP = 0
+    FP = 0
+    TN = 0
+    FN = 0
+    for przyklad in zbior:
+        if(przyklad[nr_odpowiedzi] == 0 and funkcja.klasyfikacja(przyklad) == 0):
+            TN += 1
+        elif(przyklad[nr_odpowiedzi] == 1 and funkcja.klasyfikacja(przyklad) == 0):
+            FN += 1
+        elif(przyklad[nr_odpowiedzi] == 1 and funkcja.klasyfikacja(przyklad) == 1):
+            TP += 1
+        elif(przyklad[nr_odpowiedzi] == 0 and funkcja.klasyfikacja(przyklad) == 1):
+            FP += 1
+    TPR = (TP)/(TP + FN)
+    FPR = (FP)/(FP + TN)
+    Precyzja = (TP)/(TP+FP)
+    return TPR, FPR, Precyzja
+
+
 def dokladnosc(funkcja, zbior, kompleks_ogolny):
-  nr_odpowiedzi = len(kompleks_ogolny)
-  dobrze = 0
-  for przyklad in zbior:
-    if(przyklad[nr_odpowiedzi]==funkcja.klasyfikacja(przyklad)):
-      dobrze +=1
-  print((dobrze*100/len(zbior)))
+    nr_odpowiedzi = len(kompleks_ogolny)
+    dobrze = 0
+    for przyklad in zbior:
+        if(przyklad[nr_odpowiedzi] == funkcja.klasyfikacja(przyklad)):
+            dobrze += 1
+    print((dobrze*100/len(zbior)))
