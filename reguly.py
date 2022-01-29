@@ -196,73 +196,41 @@ class Zbior_Regul:
 
 
 def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
-  dlugosc_kompleksu = len(kompleks_ogolny)
-  dlugosc_zbioru = len(zbior_T)
+    dlugosc_kompleksu = len(kompleks_ogolny)
+    dlugosc_zbioru = len(zbior_T)
 
-  nowy_kompleks = []
-  nowy_kompleks =  random.sample(range(dlugosc_kompleksu-1),math.ceil(math.sqrt(dlugosc_kompleksu)))
-  nowy_kompleks.sort()
+    nowy_kompleks = []
+    nowy_kompleks = random.sample(range(dlugosc_kompleksu-1), math.ceil(math.sqrt(dlugosc_kompleksu)))
+    nowy_kompleks.sort()
 
-  
-  
-  nowy_trenujacy=[]
-  for dane in range(dlugosc_zbioru):
-    temp_wiersz = []
-    wiersz = random.randrange(dlugosc_zbioru)
-    for kompleks in nowy_kompleks:
-      temp_wiersz.append(zbior_T[wiersz][kompleks])
-    temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
-    nowy_trenujacy.append(temp_wiersz)
+    nowy_trenujacy = []
+    for dane in range(dlugosc_zbioru):
+        temp_wiersz = []
+        wiersz = random.randrange(dlugosc_zbioru)
+        for kompleks in nowy_kompleks:
+            temp_wiersz.append(zbior_T[wiersz][kompleks])
+        temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
+        nowy_trenujacy.append(temp_wiersz)
 
-
-  Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
-  return Drzewo
+    Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
+    return Drzewo
 
 
 class RegLas:
-  def __init__(self, dane_T, kompleks_ogolny, szerokosc=50, RegLasM=5):
-    self.szerokosc = szerokosc
-    self.dane_T = dane_T
-    self.kompleks_ogolny = kompleks_ogolny
-    self.las = []
-    for t in range(self.szerokosc):
-      self.las.append(RegDrzewo(dane_T, kompleks_ogolny, RegDrzeM=RegLasM))
-  
-  def klasyfikacja(self, przyklad):
-    wynik = 0
-    for drzewo in self.las:
-      wynik += drzewo.klasyfikacja(przyklad)
-    wynik=wynik/self.szerokosc
-    if (wynik>0.5):
-      return 1
-    else: return 0
+    def __init__(self, dane_T, kompleks_ogolny, szerokosc=50, RegLasM=5):
+        self.szerokosc = szerokosc
+        self.dane_T = dane_T
+        self.kompleks_ogolny = kompleks_ogolny
+        self.las = []
+        for t in range(self.szerokosc):
+            self.las.append(RegDrzewo(dane_T, kompleks_ogolny, RegDrzeM=RegLasM))
 
-
-def dane_statystyczne(funkcja, zbior, kompleks_ogolny):
-    nr_odpowiedzi = len(kompleks_ogolny)
-    TP = 0
-    FP = 0
-    TN = 0
-    FN = 0
-    for przyklad in zbior:
-        if(przyklad[nr_odpowiedzi] == 0 and funkcja.klasyfikacja(przyklad) == 0):
-            TN += 1
-        elif(przyklad[nr_odpowiedzi] == 1 and funkcja.klasyfikacja(przyklad) == 0):
-            FN += 1
-        elif(przyklad[nr_odpowiedzi] == 1 and funkcja.klasyfikacja(przyklad) == 1):
-            TP += 1
-        elif(przyklad[nr_odpowiedzi] == 0 and funkcja.klasyfikacja(przyklad) == 1):
-            FP += 1
-    TPR = (TP)/(TP + FN)
-    FPR = (FP)/(FP + TN)
-    Precyzja = (TP)/(TP+FP)
-    return TPR, FPR, Precyzja
-
-
-def dokladnosc(funkcja, zbior, kompleks_ogolny):
-    nr_odpowiedzi = len(kompleks_ogolny)
-    dobrze = 0
-    for przyklad in zbior:
-        if(przyklad[nr_odpowiedzi] == funkcja.klasyfikacja(przyklad)):
-            dobrze += 1
-    print((dobrze*100/len(zbior)))
+    def klasyfikacja(self, przyklad):
+        wynik = 0
+        for drzewo in self.las:
+            wynik += drzewo.klasyfikacja(przyklad)
+        wynik = wynik/self.szerokosc
+        if (wynik > 0.5):
+            return 1
+        else:
+            return 0
