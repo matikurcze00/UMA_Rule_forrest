@@ -1,3 +1,5 @@
+# Authors: Łukasz Tumialis, Mateusz Roszkowski
+#
 import csv
 import math
 from reguly import Zbior_Regul, RegLas
@@ -30,11 +32,12 @@ with open('POGODA/pogoda_test.csv', newline='') as csvfile:
         row.append(int(temp))
         testing_data.append(row)
 print(len(testing_data))
-for par_sze in [10,50]:
+
+for par_sze in [10, 50]:
 
   f = open('Pogoda_testy_para_sze.txt', 'a')
 
-  liczba_powtorzen = 7
+  liczba_powtorzen = 25
   parametr_m = 2
   szer = par_sze
 

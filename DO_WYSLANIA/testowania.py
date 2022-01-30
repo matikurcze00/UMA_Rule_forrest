@@ -1,3 +1,5 @@
+# Authors: Łukasz Tumialis, Mateusz Roszkowski
+#
 def dokladnosc(funkcja, zbior, kompleks_ogolny):
     nr_odpowiedzi = len(kompleks_ogolny)
     dobrze = 0

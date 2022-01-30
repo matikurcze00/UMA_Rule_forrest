@@ -1,3 +1,5 @@
+# Authors: Łukasz Tumialis, Mateusz Roszkowski
+#
 import csv
 import math
 from reguly import Zbior_Regul, RegLas
