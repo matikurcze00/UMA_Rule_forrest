@@ -172,12 +172,12 @@ def rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow):
     return nowy_kompleks
 
 
-def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, lista_atrybutow, mm=5):
+def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, lista_atrybutow, par_m=5):
     zbior_Regul = []
     zbior_P = copy.copy(zbior_T)
     zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
-        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=mm)
+        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=par_m)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
         zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
