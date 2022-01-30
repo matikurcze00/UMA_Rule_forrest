@@ -69,9 +69,9 @@ def liczba_przykladow_pokrywanych_przez_kompleks(zbior_przykladow, kompleks):
     liczba_o_klasie_dom = 0
     klasa = 1
     for przyklad in zbior_przykladow:
-      if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
-        liczba += 1
-        liczba_o_klasie_dom += przyklad[len(przyklad)-1]
+        if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
+            liczba += 1
+            liczba_o_klasie_dom += przyklad[len(przyklad)-1]
     if liczba/2 > liczba_o_klasie_dom:
         liczba_o_klasie_dom = liczba - liczba_o_klasie_dom
         klasa = 0
@@ -145,25 +145,25 @@ def usun_przyklady_pokrywane_przez_kompleks(z_przykl, kompleks):
     return zbior
 
 
-def skroc_kompleks_ogolny(kompleks_ogolny, header):
+def skroc_kompleks_ogolny(kompleks_ogolny, lista_atrybutow):
     nowy_kompleks_ogolny = []
-    for kolumna in header:
+    for kolumna in lista_atrybutow:
         nowy_kompleks_ogolny.append(kompleks_ogolny[kolumna])
     return nowy_kompleks_ogolny
 
 
-def rozszerz_kompleks(kompleks, kompleks_ogolny, header):
+def rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow):
     nowy_kompleks = []
-    kopia_header = copy.copy(header)
+    kopia_lista_atrybutow = copy.copy(lista_atrybutow)
     i = 0
     flaga = 1
     for kolumna in range(len(kompleks_ogolny)):
         if flaga:
-            if kolumna == kopia_header[0]:
+            if kolumna == kopia_lista_atrybutow[0]:
                 nowy_kompleks.append(kompleks[i])
                 i += 1
-                kopia_header.remove(kolumna)
-                if len(kopia_header) < 1:
+                kopia_lista_atrybutow.remove(kolumna)
+                if len(kopia_lista_atrybutow) < 1:
                     flaga = 0
             else:
                 nowy_kompleks.append(kompleks_ogolny[kolumna])
@@ -197,7 +197,7 @@ class Zbior_Regul:
 
 def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
     dlugosc_kompleksu = len(kompleks_ogolny)
-    dlugosc_zbioru = len(zbior_T)-1
+    dlugosc_zbioru = len(zbior_T)
 
     nowy_kompleks = []
     nowy_kompleks = random.sample(range(dlugosc_kompleksu-1), math.ceil(math.sqrt(dlugosc_kompleksu)))
@@ -211,6 +211,7 @@ def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
             temp_wiersz.append(zbior_T[wiersz][kompleks])
         temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
         nowy_trenujacy.append(temp_wiersz)
+
     Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
     return Drzewo
 
