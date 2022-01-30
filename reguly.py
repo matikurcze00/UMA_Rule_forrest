@@ -1,7 +1,7 @@
 import itertools
 import copy
-import collections
-from msilib.schema import Class
+# import collections
+# from msilib.schema import Class
 import random
 import math
 
