@@ -172,21 +172,21 @@ def rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow):
     return nowy_kompleks
 
 
-def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, header, mm=5):
+def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, lista_atrybutow, mm=5):
     zbior_Regul = []
     zbior_P = copy.copy(zbior_T)
     zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
         kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=mm)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
-        zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, header), klasa))
+        zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
     return zbior_Regul
 
 
 class Zbior_Regul:
-    def __init__(self, zbior_T, kompleks_ogolny, header, mmm=5):
-        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, header), kompleks_ogolny, header, mm=mmm)
+    def __init__(self, zbior_T, kompleks_ogolny, lista_atrybutow, mmm=5):
+        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, lista_atrybutow), kompleks_ogolny, header, mm=mmm)
         self.kompleks_ogolny = kompleks_ogolny
 
     def klasyfikacja(self, przyklad):
