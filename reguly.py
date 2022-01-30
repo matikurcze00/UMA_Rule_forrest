@@ -196,7 +196,7 @@ class Zbior_Regul:
 
 
 def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
-    dlugosc_kompleksu = len(kompleks_ogolny)-1
+    dlugosc_kompleksu = len(kompleks_ogolny)
     dlugosc_zbioru = len(zbior_T)-1
 
     nowy_kompleks = []
@@ -211,7 +211,6 @@ def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
             temp_wiersz.append(zbior_T[wiersz][kompleks])
         temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
         nowy_trenujacy.append(temp_wiersz)
-
     Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
     return Drzewo
 
