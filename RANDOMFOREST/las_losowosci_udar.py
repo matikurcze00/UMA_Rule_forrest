@@ -16,7 +16,37 @@ with open('UDAR/udar_training.csv', newline='') as csvfile:
         temp = row[-1]
         row.pop(-1)
         outputs.append(int(temp))
-        training_data.append(row)
+        temp = []
+        if (row[0]=='Male'):
+          temp.append(1)
+        else:
+          temp.append(1)
+        temp.append(row[1])
+        temp.append(row[2])
+        temp.append(row[3])
+        if(row[4]=='Yes'):
+          temp.append(1)
+        else:
+          temp.append(1)
+        for wartosc in ['Private','Self-employed','children','Govt_job','Never_worked']:
+          if(row[5]==wartosc):
+            temp.append(1)
+          else:
+            temp.append(0)
+        if(row[6]=="Urban"):
+          temp.append(1)
+        else:
+          temp.append(0)
+        temp.append(row[7])
+        temp.append(row[8])
+        if(row[9]=='never smoked'):
+          temp.append(0)
+        elif(row[9]=='formerly smoked'):
+          temp.append(0.5)
+        else:
+          temp.append(1)
+
+        training_data.append(temp)
 print(len(training_data))
 print(training_data[1])
 
@@ -27,7 +57,36 @@ with open('UDAR/udar_test.csv', newline='') as csvfile:
         temp = row[-1]
         row.pop(-1)
         outputs.append(int(temp))
-        training_data.append(row)
+        temp = []
+        if (row[0]=='Male'):
+          temp.append(1)
+        else:
+          temp.append(1)
+        temp.append(row[1])
+        temp.append(row[2])
+        temp.append(row[3])
+        if(row[4]=='Yes'):
+          temp.append(1)
+        else:
+          temp.append(1)
+        for wartosc in ['Private','Self-employed','children','Govt_job','Never_worked']:
+          if(row[5]==wartosc):
+            temp.append(1)
+          else:
+            temp.append(0)
+        if(row[6]=="Urban"):
+          temp.append(1)
+        else:
+          temp.append(0)
+        temp.append(row[7])
+        temp.append(row[8])
+        if(row[9]=='never smoked'):
+          temp.append(0)
+        elif(row[9]=='formerly smoked'):
+          temp.append(0.5)
+        else:
+          temp.append(1)
+        training_data.append(temp)
 print(len(training_data))
 training_data = numpy.array(training_data)
 print(len(training_data[0]))

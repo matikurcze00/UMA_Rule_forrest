@@ -16,6 +16,10 @@ with open('POGODA/pogoda_training.csv', newline='') as csvfile:
         temp = row[-1]
         row.pop(-1)
         outputs.append(int(temp))
+        if(row[9]=='Yes'):
+          row[9]=1
+        else:
+          row[9]=0
         training_data.append(row)
 print(len(training_data))
 print(training_data[1])
@@ -27,6 +31,10 @@ with open('POGODA/pogoda_test.csv', newline='') as csvfile:
         temp = row[-1]
         row.pop(-1)
         outputs.append(int(temp))
+        if(row[9]=='Yes'):
+          row[9]=1
+        else:
+          row[9]=0
         training_data.append(row)
 print(len(training_data))
 training_data = numpy.array(training_data)
