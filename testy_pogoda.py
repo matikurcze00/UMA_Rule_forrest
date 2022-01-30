@@ -34,7 +34,7 @@ for par_sze in [5,35,75,125,175,250]:
 
   f = open('Pogoda_testy_para_sze.txt', 'a')
 
-  liczba_powtorzen = 4
+  liczba_powtorzen = 7
   parametr_m = 2
   szer = par_sze
 
@@ -60,7 +60,7 @@ for par_sze in [5,35,75,125,175,250]:
   f.write('\n')
   lista_wynikow_lasu = []
   for i in range(liczba_powtorzen):
-      nowy_las = RegLas(training_data, kompleks_ogolny, szer, RegLasM=parametr_m)
+      nowy_las = RegLas(training_data, kompleks_ogolny, szerokosc=szer, RegLasM=parametr_m)
       [TPR_lasu, FPR_lasu, Precyzja_lasu] = dane_statystyczne(nowy_las, testing_data, kompleks_ogolny)
       wynik_lasu = [TPR_lasu, FPR_lasu, Precyzja_lasu, dokladnosc(nowy_las, testing_data, kompleks_ogolny)]
       print('____________________')

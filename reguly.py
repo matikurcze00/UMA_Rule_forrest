@@ -69,9 +69,9 @@ def liczba_przykladow_pokrywanych_przez_kompleks(zbior_przykladow, kompleks):
     liczba_o_klasie_dom = 0
     klasa = 1
     for przyklad in zbior_przykladow:
-        if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
-            liczba += 1
-            liczba_o_klasie_dom += przyklad[len(przyklad)-1]
+      if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
+        liczba += 1
+        liczba_o_klasie_dom += przyklad[len(przyklad)-1]
     if liczba/2 > liczba_o_klasie_dom:
         liczba_o_klasie_dom = liczba - liczba_o_klasie_dom
         klasa = 0

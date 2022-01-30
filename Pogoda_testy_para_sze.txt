@@ -1,18 +1,2 @@
 --Liczba Drzew--
 5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
---Liczba Drzew--
-5
