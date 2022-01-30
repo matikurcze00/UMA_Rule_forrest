@@ -196,8 +196,8 @@ class Zbior_Regul:
 
 
 def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
-    dlugosc_kompleksu = len(kompleks_ogolny)
-    dlugosc_zbioru = len(zbior_T)
+    dlugosc_kompleksu = len(kompleks_ogolny)-1
+    dlugosc_zbioru = len(zbior_T)-1
 
     nowy_kompleks = []
     nowy_kompleks = random.sample(range(dlugosc_kompleksu-1), math.ceil(math.sqrt(dlugosc_kompleksu)))
