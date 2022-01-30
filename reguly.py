@@ -69,9 +69,9 @@ def liczba_przykladow_pokrywanych_przez_kompleks(zbior_przykladow, kompleks):
     liczba_o_klasie_dom = 0
     klasa = 1
     for przyklad in zbior_przykladow:
-      if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
-        liczba += 1
-        liczba_o_klasie_dom += przyklad[len(przyklad)-1]
+        if czy_kompleks_pokrywa_przyklad(kompleks, przyklad):
+            liczba += 1
+            liczba_o_klasie_dom += przyklad[len(przyklad)-1]
     if liczba/2 > liczba_o_klasie_dom:
         liczba_o_klasie_dom = liczba - liczba_o_klasie_dom
         klasa = 0
@@ -145,25 +145,25 @@ def usun_przyklady_pokrywane_przez_kompleks(z_przykl, kompleks):
     return zbior
 
 
-def skroc_kompleks_ogolny(kompleks_ogolny, header):
+def skroc_kompleks_ogolny(kompleks_ogolny, lista_atrybutow):
     nowy_kompleks_ogolny = []
-    for kolumna in header:
+    for kolumna in lista_atrybutow:
         nowy_kompleks_ogolny.append(kompleks_ogolny[kolumna])
     return nowy_kompleks_ogolny
 
 
-def rozszerz_kompleks(kompleks, kompleks_ogolny, header):
+def rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow):
     nowy_kompleks = []
-    kopia_header = copy.copy(header)
+    kopia_lista_atrybutow = copy.copy(lista_atrybutow)
     i = 0
     flaga = 1
     for kolumna in range(len(kompleks_ogolny)):
         if flaga:
-            if kolumna == kopia_header[0]:
+            if kolumna == kopia_lista_atrybutow[0]:
                 nowy_kompleks.append(kompleks[i])
                 i += 1
-                kopia_header.remove(kolumna)
-                if len(kopia_header) < 1:
+                kopia_lista_atrybutow.remove(kolumna)
+                if len(kopia_lista_atrybutow) < 1:
                     flaga = 0
             else:
                 nowy_kompleks.append(kompleks_ogolny[kolumna])
@@ -172,21 +172,21 @@ def rozszerz_kompleks(kompleks, kompleks_ogolny, header):
     return nowy_kompleks
 
 
-def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, header, mm=5):
+def sekwencyjne_pokrywanie(zbior_T, kompleks_ogolny_skrocony, kompleks_ogolny, lista_atrybutow, par_m=5):
     zbior_Regul = []
     zbior_P = copy.copy(zbior_T)
     zbior_atom = utworz_kompleksy_atomowe(kompleks_ogolny_skrocony)
     while zbior_P != []:
-        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=mm)
+        kompleks = znajdz_kompleks_cn2(zbior_T, zbior_P, zbior_atom, kompleks_ogolny_skrocony,  m=par_m)
         [_, _, klasa] = liczba_przykladow_pokrywanych_przez_kompleks(zbior_P, kompleks)
-        zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, header), klasa))
+        zbior_Regul.append((rozszerz_kompleks(kompleks, kompleks_ogolny, lista_atrybutow), klasa))
         zbior_P = usun_przyklady_pokrywane_przez_kompleks(zbior_P, kompleks)
     return zbior_Regul
 
 
 class Zbior_Regul:
-    def __init__(self, zbior_T, kompleks_ogolny, header, mmm=5):
-        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, header), kompleks_ogolny, header, mm=mmm)
+    def __init__(self, zbior_T, kompleks_ogolny, lista_atrybutow, mmm=5):
+        self.zbior_Regul = sekwencyjne_pokrywanie(zbior_T, skroc_kompleks_ogolny(kompleks_ogolny, lista_atrybutow), kompleks_ogolny, header, mm=mmm)
         self.kompleks_ogolny = kompleks_ogolny
 
     def klasyfikacja(self, przyklad):
@@ -197,7 +197,7 @@ class Zbior_Regul:
 
 def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
     dlugosc_kompleksu = len(kompleks_ogolny)
-    dlugosc_zbioru = len(zbior_T)-1
+    dlugosc_zbioru = len(zbior_T)
 
     nowy_kompleks = []
     nowy_kompleks = random.sample(range(dlugosc_kompleksu-1), math.ceil(math.sqrt(dlugosc_kompleksu)))
@@ -211,6 +211,7 @@ def RegDrzewo(zbior_T, kompleks_ogolny, RegDrzeM=5):
             temp_wiersz.append(zbior_T[wiersz][kompleks])
         temp_wiersz.append(zbior_T[wiersz][dlugosc_kompleksu])
         nowy_trenujacy.append(temp_wiersz)
+
     Drzewo = Zbior_Regul(nowy_trenujacy, kompleks_ogolny, nowy_kompleks, mmm=RegDrzeM)
     return Drzewo
 

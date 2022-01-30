@@ -30,7 +30,8 @@ with open('ZAWAL/zawal_test.csv', newline='') as csvfile:
         row.append(int(temp))
         testing_data.append(row)
 print(len(testing_data))
-parametr_m = 2
+liczba_powtorzen = 15
+parametr_m = 5
 nowy_zbior = Zbior_Regul(training_data, kompleks_ogolny, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], mmm=parametr_m)
 
 print(training_data[20])
@@ -44,10 +45,9 @@ print(parametr_m)
 print('_______ZBIOR_________')
 print(wynik_zbioru)
 print('____________________')
-
 lista_wynikow_lasu = []
-for i in range(25):
-    nowy_las = RegLas(training_data, kompleks_ogolny, 50, RegLasM=2)
+for i in range(liczba_powtorzen):
+    nowy_las = RegLas(training_data, kompleks_ogolny, 50, RegLasM=parametr_m)
     print('-------------------')
     print(testing_data[20])
     print(nowy_las.klasyfikacja(testing_data[20]))
@@ -72,7 +72,7 @@ for wyniki in lista_wynikow_lasu:
             mini[i] = wynik
         suma[i] += wynik
 
-srednia = [suma[0]/25, suma[1]/25, suma[2]/25, suma[3]/25]
+srednia = [suma[0]/liczba_powtorzen, suma[1]/liczba_powtorzen, suma[2]/liczba_powtorzen, suma[3]/liczba_powtorzen]
 odchylenie = [0, 0, 0, 0]
 suma = [0, 0, 0, 0]
 for wyniki in lista_wynikow_lasu:
@@ -80,8 +80,11 @@ for wyniki in lista_wynikow_lasu:
         suma[i] += (wynik-srednia[i])*(wynik-srednia[i])
 
 for i in range(4):
-    odchylenie[i] = math.sqrt(suma[i]/25)
+    odchylenie[i] = math.sqrt(suma[i]/liczba_powtorzen)
 
+
+print('--M--M--M--M--')
+print(parametr_m)
 print("______ODCHYLENIE")
 print(odchylenie)
 print("______SREDNIA")

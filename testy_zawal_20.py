@@ -31,13 +31,12 @@ with open('ZAWAL/zawal_test.csv', newline='') as csvfile:
         testing_data.append(row)
 print(len(testing_data))
 
-for par_sze in [5,10,35,50,75,100,150,200]:
+for par_m in range(1, 10):
 
     f = open('ZAWAL_testy_para_m.txt', 'a')
 
     liczba_powtorzen = 13
-    parametr_m = 2
-    szer = par_sze
+    parametr_m = par_m
 
     f.writelines('--M--M--M--M--')
     f.write('\n')
@@ -60,7 +59,7 @@ for par_sze in [5,10,35,50,75,100,150,200]:
     f.write('\n')
     lista_wynikow_lasu = []
     for i in range(liczba_powtorzen):
-        nowy_las = RegLas(training_data, kompleks_ogolny, szer, RegLasM=parametr_m)
+        nowy_las = RegLas(training_data, kompleks_ogolny, 50, RegLasM=parametr_m)
         [TPR_lasu, FPR_lasu, Precyzja_lasu] = dane_statystyczne(nowy_las, testing_data, kompleks_ogolny)
         wynik_lasu = [TPR_lasu, FPR_lasu, Precyzja_lasu, dokladnosc(nowy_las, testing_data, kompleks_ogolny)]
         print('____________________')
