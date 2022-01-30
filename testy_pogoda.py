@@ -34,7 +34,7 @@ for par_sze in [5,35,75,125,175,250]:
 
   f = open('Pogoda_testy_para_sze.txt', 'a')
 
-  liczba_powtorzen = 7
+  liczba_powtorzen = 4
   parametr_m = 2
   szer = par_sze
 

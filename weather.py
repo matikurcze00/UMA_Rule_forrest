@@ -13,10 +13,10 @@ with open('weatherAUS_noNADataOutput.csv', newline='') as csvfile:
       if(row[0] in header):
         temp = []
         temp.append(row[0])
-        temp.append(int(float(row[1])-(float(row[1])%8)))
-        temp.append(int(float(row[2])-(float(row[2])%10)))
-        temp.append(int(float(row[3])-(float(row[3])%25)))
-        temp.append(int(float(row[4])-(float(row[4])%5)))
+        temp.append(int(float(row[1])-(float(row[1])%15)))
+        temp.append(int(float(row[2])-(float(row[2])%15)))
+        temp.append(int(float(row[3])-(float(row[3])%30)))
+        temp.append(int(float(row[4])-(float(row[4])%10)))
         temp.append(int(float(row[5])-(float(row[5])%5)))
         temp.append(int(float(row[7])-(float(row[7])%25)))
         temp.append(int(float(row[11])-(float(row[11])%25)))

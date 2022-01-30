@@ -1,0 +1,2 @@
+--Liczba Drzew--
+5
