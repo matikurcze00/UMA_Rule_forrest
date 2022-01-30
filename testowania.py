@@ -1,5 +1,5 @@
 def dokladnosc(funkcja, zbior, kompleks_ogolny):
-    nr_odpowiedzi = len(kompleks_ogolny)-1
+    nr_odpowiedzi = len(kompleks_ogolny)
     dobrze = 0
     for przyklad in zbior:
         if(przyklad[nr_odpowiedzi] == funkcja.klasyfikacja(przyklad)):
@@ -8,7 +8,7 @@ def dokladnosc(funkcja, zbior, kompleks_ogolny):
 
 
 def dane_statystyczne(funkcja, zbior, kompleks_ogolny):
-    nr_odpowiedzi = len(kompleks_ogolny)-1
+    nr_odpowiedzi = len(kompleks_ogolny)
     TP = 0
     FP = 0
     TN = 0
